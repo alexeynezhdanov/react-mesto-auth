@@ -14,5 +14,5 @@
 
 **Сам проект**
 
-* [Ссылка на проект] https://github.com/alexeynezhdanov/mesto-react.git
+* [Ссылка на проект] https://github.com/alexeynezhdanov/react-mesto-auth.git
 =======
