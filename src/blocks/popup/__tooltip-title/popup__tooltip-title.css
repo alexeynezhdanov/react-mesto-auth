@@ -1,0 +1,20 @@
+.popup__tooltip-title {
+    margin: 32px auto 60px;
+    padding: 0;
+    width: 330px;
+    text-align: center;
+    font-style: normal;
+    font-weight: 900;
+    font-size: 24px;
+    line-height: 23px;
+    color: #000;
+}
+
+@media screen and (max-width: 515px) {
+    .popup__tooltip-title {
+        margin: 25px auto 45px;
+        width: 238px;
+        font-size: 18px;
+        line-height: 22px;
+    }
+}

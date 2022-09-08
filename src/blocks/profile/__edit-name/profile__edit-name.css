@@ -1,0 +1,21 @@
+.profile__edit-name {
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    flex-wrap: nowrap;
+    position: relative;
+    justify-content: center;
+}
+
+@media screen and (max-width: 754px) {
+    .profile__edit-name {
+        max-width: 560px;
+        left: 21px;
+    }
+}
+
+@media screen and (max-width: 630px) {
+    .profile__edit-name {
+        left: 14px;
+    }
+}

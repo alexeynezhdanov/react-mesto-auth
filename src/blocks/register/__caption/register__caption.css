@@ -1,0 +1,32 @@
+.register__caption {
+    margin: 15px auto 0;  
+    padding: 0;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    color: #FFFFFF;
+    text-align: center;
+    text-decoration: none;
+}
+
+@media screen and (max-width: 918px) {
+    .register__caption {
+        max-width: 344px;
+    }
+}
+
+@media screen and (max-width: 754px) {
+    .register__caption {
+        max-width: 498px;
+    }
+}
+
+@media screen and (max-width: 620px) {
+    .register__caption {
+        max-width: 226px;
+        margin: 0 auto;
+        font-size: 14px;
+        line-height: 17px;
+    }
+}

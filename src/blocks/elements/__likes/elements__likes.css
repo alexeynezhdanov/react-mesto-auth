@@ -1,0 +1,7 @@
+.elements__likes {
+    position: relative;
+    top: -7px;
+    width: 22px;
+    flex-wrap: wrap;
+    display: inline-block;
+}

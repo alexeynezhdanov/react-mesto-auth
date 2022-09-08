@@ -1,0 +1,16 @@
+.popup__info-tooltip {
+    margin: auto;
+    width: 430px;
+    background: #FFF;
+    border-radius: 10px;
+    z-index: 2;
+    display: flex;
+    position: relative;
+    flex-wrap: wrap;
+}
+
+@media screen and (max-width: 530px) {
+    .popup__info-tooltip {
+        width: 282px;
+    }
+}

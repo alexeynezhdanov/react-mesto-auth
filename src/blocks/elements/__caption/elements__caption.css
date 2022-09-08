@@ -1,0 +1,7 @@
+.elements__caption {
+    margin: 0;
+    width: 219px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}

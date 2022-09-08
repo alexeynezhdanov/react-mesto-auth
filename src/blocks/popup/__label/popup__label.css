@@ -1,0 +1,12 @@
+.popup__label {
+    position: absolute;
+    margin: 0;
+    color: #FFF;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 15px;
+    bottom: -25px;
+    left: 0;
+}

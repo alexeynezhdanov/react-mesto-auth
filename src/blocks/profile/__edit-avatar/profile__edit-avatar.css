@@ -1,0 +1,17 @@
+.profile__edit-avatar {
+    margin-right: 30px;
+    background-image: url(../../../images/pencil.svg);
+    background-size: 26px 26px;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+@media screen and (max-width: 754px) {
+    .profile__edit-avatar {
+    margin: auto;
+    }
+}
+
+.profile__avatar:hover {
+    opacity: 0.3;
+}
