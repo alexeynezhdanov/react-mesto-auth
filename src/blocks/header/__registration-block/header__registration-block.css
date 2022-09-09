@@ -1,0 +1,19 @@
+.header__registration-block {
+    margin-left: auto;
+    display: flex;
+    display: flex;
+    flex-flow: nowrap; 
+}
+
+@media screen and (max-width: 934px) {
+    .header__registration-block {
+        margin-right: 27px;
+    }
+}
+
+@media screen and (max-width: 620px) {
+    .header__registration-block {
+        margin: auto 27px auto auto;
+        flex-flow: column wrap;
+    }
+}

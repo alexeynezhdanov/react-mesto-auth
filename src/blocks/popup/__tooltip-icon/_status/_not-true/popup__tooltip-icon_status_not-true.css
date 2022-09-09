@@ -1,4 +1,4 @@
-.profile__tooltip-icon_status_not-true {
+.popup__tooltip-icon_status_not-true {
     margin: 60px auto 0;
     background-color: #fff;
     background-image: url(../../../../../images/not-true.svg);
@@ -12,14 +12,14 @@
 }
 
 @media screen and (max-width: 754px) {
-    .profile__tooltip-icon_status_not-true {
+    .popup__tooltip-icon_status_not-true {
         margin: auto 0 8px 18px;
 
     }
 }
 
 @media screen and (max-width: 620px) {
-    .profile__tooltip-icon_status_not-true {
+    .popup__tooltip-icon_status_not-true {
         margin: auto;
         background-size: 7.5px 7.5px;
         width: 18px;
