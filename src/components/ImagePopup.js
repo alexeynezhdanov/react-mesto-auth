@@ -1,8 +1,6 @@
-function ImagePopup(props) {
-  const { isOpenImagePopup, card, onClose } = props;
-
+function ImagePopup({ isOpen, card, onClose }) {
   return (
-    <section className={`popup popup_view ${isOpenImagePopup}`}>
+    <section className={`popup popup_view ${isOpen && "popup_opened"}`}>
       <div className="popup__container-view">
         <img
           className="popup__image overlay"

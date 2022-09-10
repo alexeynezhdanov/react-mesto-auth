@@ -1,9 +1,7 @@
 import { useEffect, useRef } from "react";
 import PopupWithForm from "./PopupWithForm";
 
-function EditAvatarPopup(props) {
-  const { isOpen, onClose, onUpdateAvatar } = props;
-
+function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar }) {
   const avatarRef = useRef("");
 
   //Чистим инпуты
@@ -16,8 +14,7 @@ function EditAvatarPopup(props) {
     e.preventDefault();
 
     onUpdateAvatar({
-      link: avatarRef.current
-        .value /* Значение инпута, полученное с помощью рефа */,
+      link: avatarRef.current.value /* Значение инпута, полученное с помощью рефа */,
     });
   }
 

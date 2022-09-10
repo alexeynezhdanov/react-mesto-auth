@@ -1,5 +1,4 @@
-function InfoTooltip(props) {
-  const { isOpen, imageTooltip, textTooltip, onClose } = props;
+function InfoTooltip({ isOpen, imageTooltip, textTooltip, onClose }) {
   const sectionInfoTooltipClassName = `popup ${isOpen && "popup_opened"}`;
 
   return (

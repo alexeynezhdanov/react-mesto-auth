@@ -23,18 +23,18 @@ function App() {
   const [isStatusTooltipPopupOpen, setIsStatusTooltipPopupOpen] = useState("");
   const [isImageTooltipPopupOpen, setIsImageTooltipPopupOpen] = useState("");
   const [selectedCard, setSelectedCard] = useState({});
-  const [isImagePopupOpen, setIsImagePopupOpen] = useState("close");
+  const [isImagePopupOpen, setIsImagePopupOpen] = useState(false);
   const [loggedIn, setLoggedIn] = useState(false);
   const [currentUser, setCurrentUser] = useState({});
   const [currentLogin, setCurrentLogin] = useState("");
   const [currentCards, setCurrentCards] = useState([]);
   const history = useHistory();
-  const getProfile = api.getProfile();
-  const getInitialCards = api.getInitialCards();
-  const jwt = localStorage.getItem("token");
 
   //Получение данных профиля и массива карточек
   useEffect(() => {
+    const getProfile = api.getProfile();
+    const getInitialCards = api.getInitialCards();
+
     if (loggedIn) {
       Promise.all([getProfile, getInitialCards])
         .then((res) => {
@@ -49,6 +49,8 @@ function App() {
 
   //Проверка токена и при его наличии авторизация и переход на главную
   useEffect(() => {
+    const jwt = localStorage.getItem("token");
+
     if (jwt) {
       auth
         .authentication(jwt)
@@ -61,25 +63,25 @@ function App() {
           console.log(err);
         });
     }
-  }, [jwt]);
+  }, []);
 
   function handleAvatarClick() {
-    setIsEditAvatarPopupOpen(true);
+    setIsEditAvatarPopupOpen("open");
   }
 
   function handleProfileClick() {
-    setIsEditProfilePopupOpen(true);
+    setIsEditProfilePopupOpen("open");
   }
 
   function handleAddPlaceClick() {
-    setIsAllPlacePopupOpen(true);
+    setIsAllPlacePopupOpen("open");
   }
 
   function closeAllPopups() {
     setIsEditAvatarPopupOpen(false);
     setIsEditProfilePopupOpen(false);
     setIsAllPlacePopupOpen(false);
-    setIsImagePopupOpen("close");
+    setIsImagePopupOpen(false);
     setIsStatusTooltipPopupOpen(false);
   }
 
@@ -163,9 +165,9 @@ function App() {
   }
 
   //Запрос на регистрацию
-  function onRegister(createProfile) {
+  function handleRegistration(userRegistrationData) {
     auth
-      .register(createProfile.password, createProfile.email)
+      .register(userRegistrationData.password, userRegistrationData.email)
       .then(() => {
         setIsStatusTooltipPopupOpen("Вы успешно зарегистрировались!");
         setIsImageTooltipPopupOpen("popup__tooltip-icon_status_true");
@@ -179,13 +181,13 @@ function App() {
   }
 
   //Запрос на авторизацию
-  function onLogin(createLogin) {
+  function handleAuthorization(userLoginData) {
     auth
-      .authorization(createLogin.password, createLogin.email)
+      .authorization(userLoginData.password, userLoginData.email)
       .then((res) => {
         localStorage.setItem("token", res.token);
         setLoggedIn(true);
-        setCurrentLogin(createLogin.email);
+        setCurrentLogin(userLoginData.email);
         history.push("/");
       })
       .catch((err) => {
@@ -196,12 +198,10 @@ function App() {
   }
 
   //Запрос на выход с авторизации
-  function onSignOut(loggedIn) {
-    if (loggedIn) {
-      localStorage.removeItem("token");
-      setLoggedIn(false);
-      setCurrentLogin("");
-    }
+  function onSignOut() {
+    localStorage.removeItem("token");
+    setLoggedIn(false);
+    setCurrentLogin("");
   }
 
   return (
@@ -224,11 +224,11 @@ function App() {
         />
 
         <Route path="/sign-up">
-          <Register signUp={onRegister} />
+          <Register signUp={handleRegistration} />
         </Route>
 
         <Route path="/sign-in">
-          <Login signIn={onLogin} />
+          <Login signIn={handleAuthorization} />
         </Route>
       </Switch>
 
@@ -268,7 +268,7 @@ function App() {
 
       <ImagePopup
         card={selectedCard}
-        isOpenImagePopup={isImagePopupOpen === "open" ? "popup_opened" : ""}
+        isOpen={isImagePopupOpen}
         onClose={closeAllPopups}
       />
       <Footer />

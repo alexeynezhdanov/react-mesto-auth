@@ -1,8 +1,7 @@
 import { React } from "react";
 import { Link, Route, Switch } from "react-router-dom";
 
-function Header(props) {
-  const { onSignOut, currentLogin } = props;
+function Header({ onSignOut, currentLogin }) {
   return (
     <header className="header">
       <div className="header__logo"></div>

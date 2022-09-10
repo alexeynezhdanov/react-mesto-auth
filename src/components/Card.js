@@ -1,8 +1,7 @@
 import { useContext } from "react";
 import { CurrentUserContext } from "./../contexts/CurrentUserContext";
 
-function Card(props) {
-  const { card } = props;
+function Card({ card, onCardClick, onCardLike, onCardDelete }) {
   const currentUser = useContext(CurrentUserContext);
   const isOwn = card.owner._id === currentUser._id;
   const cardDeleteButtonClassName = `elements__basket ${
@@ -18,15 +17,15 @@ function Card(props) {
   }`;
 
   function handleOnCardClick() {
-    props.onCardClick(card);
+    onCardClick(card);
   }
 
   function handleLikeClick() {
-    props.onCardLike(card);
+    onCardLike(card);
   }
 
   function handleCardDelete() {
-    props.onCardDelete(card);
+    onCardDelete(card);
   }
 
   return (
