@@ -25,21 +25,18 @@ function App() {
   const [selectedCard, setSelectedCard] = useState({});
   const [isImagePopupOpen, setIsImagePopupOpen] = useState(false);
   const [loggedIn, setLoggedIn] = useState(false);
-  const [currentUser, setCurrentUser] = useState({});
-  const [currentLogin, setCurrentLogin] = useState("");
-  const [currentCards, setCurrentCards] = useState([]);
+  const [userCurrent, setUserCurrent] = useState({});
+  const [loginCurrent, setLoginCurrent] = useState("");
+  const [cardsCurrent, setCardsCurrent] = useState([]);
   const history = useHistory();
 
   //Получение данных профиля и массива карточек
   useEffect(() => {
-    const getProfile = api.getProfile();
-    const getInitialCards = api.getInitialCards();
-
     if (loggedIn) {
-      Promise.all([getProfile, getInitialCards])
+      Promise.all([api.getProfile(), api.getInitialCards()])
         .then((res) => {
-          setCurrentUser(res[0]);
-          setCurrentCards(res[1]);
+          setUserCurrent(res[0]);
+          setCardsCurrent(res[1]);
         })
         .catch((err) => {
           console.log(err);
@@ -56,7 +53,7 @@ function App() {
         .authentication(jwt)
         .then((res) => {
           setLoggedIn(true);
-          setCurrentLogin(res.data.email);
+          setLoginCurrent(res.data.email);
           history.push("/");
         })
         .catch((err) => {
@@ -66,15 +63,15 @@ function App() {
   }, []);
 
   function handleAvatarClick() {
-    setIsEditAvatarPopupOpen("open");
+    setIsEditAvatarPopupOpen(true);
   }
 
   function handleProfileClick() {
-    setIsEditProfilePopupOpen("open");
+    setIsEditProfilePopupOpen(true);
   }
 
   function handleAddPlaceClick() {
-    setIsAllPlacePopupOpen("open");
+    setIsAllPlacePopupOpen(true);
   }
 
   function closeAllPopups() {
@@ -87,7 +84,7 @@ function App() {
 
   function handleCardClick(card) {
     setSelectedCard(card);
-    setIsImagePopupOpen("open");
+    setIsImagePopupOpen(true);
   }
 
   //Изменение профиля, отправка данных на сервер
@@ -95,7 +92,7 @@ function App() {
     api
       .changeProfile(newUserData.name, newUserData.about)
       .then((res) => {
-        setCurrentUser(res);
+        setUserCurrent(res);
         closeAllPopups();
       })
       .catch((err) => {
@@ -108,7 +105,7 @@ function App() {
     api
       .changeAvatar(newAvatarData)
       .then((res) => {
-        setCurrentUser(res);
+        setUserCurrent(res);
         closeAllPopups();
       })
       .catch((err) => {
@@ -119,12 +116,12 @@ function App() {
   //Ставим и получаем лайки на сервере
   function handleCardLike(card) {
     // Снова проверяем, есть ли уже лайк на этой карточке
-    const isLiked = card.likes.some((i) => i._id === currentUser._id);
+    const isLiked = card.likes.some((i) => i._id === userCurrent._id);
     const changeLikeCardStatus = isLiked ? "deleteLike" : "putLike";
 
     api[changeLikeCardStatus](card._id)
       .then((newCard) => {
-        setCurrentCards((state) =>
+        setCardsCurrent((state) =>
           state.map((existingCard) =>
             existingCard._id === card._id ? newCard : existingCard
           )
@@ -140,7 +137,7 @@ function App() {
     api
       .addNewCard(card.name, card.link)
       .then((newCard) => {
-        setCurrentCards([newCard, ...currentCards]);
+        setCardsCurrent([newCard, ...cardsCurrent]);
         closeAllPopups();
       })
       .catch((err) => {
@@ -153,7 +150,7 @@ function App() {
     api
       .deleteCard(card._id)
       .then(() => {
-        setCurrentCards((state) =>
+        setCardsCurrent((state) =>
           state.filter((existingCard) =>
             existingCard._id === card._id ? "" : existingCard
           )
@@ -187,7 +184,7 @@ function App() {
       .then((res) => {
         localStorage.setItem("token", res.token);
         setLoggedIn(true);
-        setCurrentLogin(userLoginData.email);
+        setLoginCurrent(userLoginData.email);
         history.push("/");
       })
       .catch((err) => {
@@ -201,12 +198,12 @@ function App() {
   function onSignOut() {
     localStorage.removeItem("token");
     setLoggedIn(false);
-    setCurrentLogin("");
+    setLoginCurrent("");
   }
 
   return (
-    <CurrentUserContext.Provider value={currentUser}>
-      <Header currentLogin={currentLogin} onSignOut={onSignOut} />
+    <CurrentUserContext.Provider value={userCurrent}>
+      <Header currentLogin={loginCurrent} onSignOut={onSignOut} />
 
       <Switch>
         <ProtectedRoute
@@ -220,7 +217,7 @@ function App() {
           onOpenPopupImage={handleCardClick}
           onCardLike={handleCardLike}
           onCardDelete={handleCardDelete}
-          currentCards={currentCards}
+          currentCards={cardsCurrent}
         />
 
         <Route path="/sign-up">
@@ -258,7 +255,7 @@ function App() {
       />
 
       <PopupWithForm
-        isOpen="true"
+        isOpen=""
         name="confirm-deletion"
         title="Вы уверены?"
         onClose={closeAllPopups}
